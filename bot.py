@@ -1,4 +1,4 @@
-import os
+import os import threading
 import asyncio
 
 from flask import Flask, request, jsonify
@@ -383,27 +383,25 @@ def home():
 # START SERVER
 # =========================
 
-if __name__ == "__main__":
+def run_flask():
+    port = int(os.getenv("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 
+
+async def run_bot():
+    await bot.delete_webhook()
+    print("Webhook removed. Starting polling...")
+
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
     init_database()
 
-    port = int(os.getenv("PORT", 10000))
+    threading.Thread(
+        target=run_flask,
+        daemon=True
+    ).start()
 
-    if BOT_TOKEN and WEBHOOK_URL:
+    asyncio.run(run_bot())
 
-        try:
-            asyncio.run(
-                bot.set_webhook(
-                    url=WEBHOOK_URL
-                )
-            )
-
-            print("Webhook set successfully!")
-
-        except Exception as e:
-            print("Webhook error:", e)
-
-    app.run(
-        host="0.0.0.0",
-        port=port
-)
