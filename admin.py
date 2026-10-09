@@ -7,7 +7,8 @@ admin = Blueprint("admin", __name__, url_prefix="/admin")
 @admin.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        if (
+        if (print("USERNAME SET:", bool(os.getenv("ADMIN_USERNAME")))
+print("PASSWORD SET:", bool(os.getenv("ADMIN_PASSWORD")))
             request.form.get("username") == os.getenv("ADMIN_USERNAME")
             and request.form.get("password") == os.getenv("ADMIN_PASSWORD")
         ):
