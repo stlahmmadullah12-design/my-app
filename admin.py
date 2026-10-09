@@ -78,3 +78,10 @@ def products():
     </form>
     <p><a href="/admin/dashboard">Dashboard</a></p>
     """
+    
+def register_admin(app):
+    app.secret_key = os.getenv("SECRET_KEY")
+    if not app.secret_key:
+        raise RuntimeError("SECRET_KEY is not configured")
+    app.register_blueprint(admin)
+
