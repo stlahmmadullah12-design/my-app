@@ -19,7 +19,8 @@ from database import (
 )
 
 app = Flask(__name__)
-
+from admin import register_admin
+register_admin(app)
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
